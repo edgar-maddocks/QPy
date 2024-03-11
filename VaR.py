@@ -21,9 +21,9 @@ def var_gaussian(returns, level=5, cornish_fischer_z=False):
         k = stats.kurtosis(returns)
         z = (
             z
-            + s * ((z**2 - 1) / 6)
-            + (k - 3) * ((z**3 - 3 * z) / 24)
-            - (s**2) * (((2 * (z**3)) - 5 * z) / 36)
+            + (z**2 - 1) * s / 6
+            + (z**3 - 3 * z) * (k - 3) / 24
+            - (2 * z**3 - 5 * z) * (s**2) / 36
         )
     return -(returns.mean() + z * returns.std(ddof=0))
 
