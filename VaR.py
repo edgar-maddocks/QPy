@@ -31,9 +31,9 @@ def var_gaussian(returns, level=5, cornish_fischer_z=False):
 def compare_vars(returns):
     comparison = pd.concat(
         [
-            var_gaussian(hfi),
-            var_gaussian(hfi, cornish_fischer_z=True),
-            var_historic(hfi),
+            var_gaussian(returns),
+            var_gaussian(returns, cornish_fischer_z=True),
+            var_historic(returns),
         ],
         axis=1,
     )
@@ -50,12 +50,3 @@ def cvar_historic(returns, level=5):
         return returns.aggregate(cvar_historic, level=level)
     else:
         raise TypeError("Expected returns to be of type pd.Series or pd.DataFrame")
-
-
-hfi = pd.read_csv("edhec-hedgefundindices.csv", header=0, index_col=0, parse_dates=True)
-hfi = hfi / 100
-hfi.index = hfi.index.to_period("M")
-
-hfi = hfi["2000":]
-
-print(var_historic(hfi, level=1))
