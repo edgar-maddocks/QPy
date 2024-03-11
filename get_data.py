@@ -42,15 +42,4 @@ def get_portfolio_data(tickers, interval="1D", n_years=5):
     return returns, cov_matrix
 
 
-stocks = ["GOOG", "META", "LMT"]
 
-years = 5
-end_date = dt.datetime.now()
-start_date = end_date - dt.timedelta(days=(365 * years))
-weights = np.repeat(1 / len(stocks), len(stocks))
-
-returns, cov_matrix = get_portfolio_data(stocks)
-
-pt = EF.Portfolio(returns, cov_matrix, weights)
-
-print(pt.minimize_vol(0.1))

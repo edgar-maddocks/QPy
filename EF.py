@@ -45,7 +45,7 @@ class Portfolio:
     """Class which represents a portfolio"""
 
     def __init__(
-        self, returns, cov_matrix, weights, risk_free_rate=0.1, weight_bounds=(0.0, 0.1)
+        self, returns, cov_matrix, weights, risk_free_rate=0.0, weight_bounds=(0.0, 1.0)
     ):
         self.returns = returns
         self.cov_matrix = cov_matrix
@@ -81,7 +81,7 @@ class Portfolio:
         vol = self.portfolio_vol()
         return returns, vol
 
-    def minimize_vol(self, target_return):
+    def minimize_vol(self, target_return, labels=False):
         """Minimizes volatility of a portfolio to meet a certain return
 
         Args:
@@ -98,8 +98,7 @@ class Portfolio:
         return_meets_target = {
             "type": "eq",
             "args": (self.returns,),
-            "fun": lambda weights: target_return
-            - portfolio_return(weights, self.returns),
+            "fun": lambda weights, returns: target_return - portfolio_return(weights, returns),
         }
 
         results = minimize(
@@ -113,9 +112,11 @@ class Portfolio:
         )
 
         weights = results.x
+        if labels:
+            weights = pd.Series(results.x, index = self.returns.index, name = "min_var_weights")
         return weights
 
-    def maximize_sr(self):
+    def maximize_sr(self, labels=False):
         """Finds weights for maximum SR portfolio
 
         Returns:
@@ -137,9 +138,11 @@ class Portfolio:
         )
 
         weights = results.x
+        if labels:
+            weights = pd.Series(results.x, index = self.returns.index, name = "max_sr_weights")
         return weights
 
-    def gmv(self):
+    def gmv(self, labels=False):
         """Finds weights for the portfolio with the lowest volatility
 
         Returns:
@@ -150,7 +153,7 @@ class Portfolio:
 
         weights_sum_one = {"type": "eq", "fun": lambda w: np.sum(w) - 1}
 
-        returns = np.repeat(1, self.n_assets)
+        returns = np.repeat(1, self.cov_matrix.shape[0])
 
         results = minimize(
             neg_portfolio_sr,
@@ -161,12 +164,14 @@ class Portfolio:
                 self.risk_free_rate,
             ),
             method="SLSQP",
-            options={"disp": True},
-            constraints=(weights_sum_one),
+            options={"disp": False},
+            constraints=(weights_sum_one,),
             bounds=bounds,
         )
 
         weights = results.x
+        if labels:
+            weights = pd.Series(results.x, index = self.returns.index, name = "gmv_weights")
         return weights
 
     def plot_ef(
@@ -176,7 +181,7 @@ class Portfolio:
         plot_ew=False,
         plot_gmv=False,
         draw_cml=False,
-        n_points=500,
+        n_points=2500,
         verbose=0,
     ):
         if verbose:
@@ -211,7 +216,7 @@ class Portfolio:
         # ymax = ef["R"].max() - 0.1 * (ef["R"].max() - ef["R"].min())
         # axs.set_ylim(ymin, ymax)
 
-        scat = axs.scatter(ef["V"], ef["R"])
+        scat = axs.scatter(ef["V"], ef["R"], s=5, c=ef["SR"])
 
         if isinstance(target_return, float):
             min_vol_weights = self.minimize_vol(target_return)
@@ -282,6 +287,7 @@ class Portfolio:
         axs.set_xlabel("Volatility")
         axs.set_ylabel("Returns")
         axs.set_title("Efficient Frontier")
+        fig.colorbar(scat, label = "Portfolio SR")
 
         plt.show()
 
