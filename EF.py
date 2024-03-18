@@ -1,4 +1,4 @@
-import stats
+import Stats
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
@@ -98,7 +98,8 @@ class Portfolio:
         return_meets_target = {
             "type": "eq",
             "args": (self.returns,),
-            "fun": lambda weights, returns: target_return - portfolio_return(weights, returns),
+            "fun": lambda weights, returns: target_return
+            - portfolio_return(weights, returns),
         }
 
         results = minimize(
@@ -113,7 +114,9 @@ class Portfolio:
 
         weights = results.x
         if labels:
-            weights = pd.Series(results.x, index = self.returns.index, name = "min_var_weights")
+            weights = pd.Series(
+                results.x, index=self.returns.index, name="min_var_weights"
+            )
         return weights
 
     def maximize_sr(self, labels=False):
@@ -139,7 +142,9 @@ class Portfolio:
 
         weights = results.x
         if labels:
-            weights = pd.Series(results.x, index = self.returns.index, name = "max_sr_weights")
+            weights = pd.Series(
+                results.x, index=self.returns.index, name="max_sr_weights"
+            )
         return weights
 
     def gmv(self, labels=False):
@@ -171,7 +176,7 @@ class Portfolio:
 
         weights = results.x
         if labels:
-            weights = pd.Series(results.x, index = self.returns.index, name = "gmv_weights")
+            weights = pd.Series(results.x, index=self.returns.index, name="gmv_weights")
         return weights
 
     def plot_ef(
@@ -287,7 +292,7 @@ class Portfolio:
         axs.set_xlabel("Volatility")
         axs.set_ylabel("Returns")
         axs.set_title("Efficient Frontier")
-        fig.colorbar(scat, label = "Portfolio SR")
+        fig.colorbar(scat, label="Portfolio SR")
 
         plt.show()
 
