@@ -1,5 +1,4 @@
-import Stats
-import GetData
+import data.data as data
 from statsmodels.tsa.stattools import adfuller
 
 import pandas as pd
@@ -11,7 +10,7 @@ import matplotlib.pyplot as plt
 
 class Stock:
     def __init__(self, ticker: str):
-        self.data = GetData.get_data(ticker)
+        self.data = data.get_data(ticker)
         self.name = ticker
 
         self.returns = self._calc_returns()
