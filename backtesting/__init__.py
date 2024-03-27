@@ -1,1 +1,1 @@
-from base_backtest import Btester, Order, Trade, Strategy
+from base_backtest import Btester, Trade, Order, Strategy

@@ -1,4 +1,4 @@
-import data.data as data
+import data_getter.data as data
 from statsmodels.tsa.stattools import adfuller
 
 import pandas as pd
