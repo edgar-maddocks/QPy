@@ -1,4 +1,4 @@
-import stats
+import finstats
 import numpy as np
 import pandas as pd
 import scipy
@@ -17,8 +17,8 @@ def var_historic(returns, level=5):
 def var_gaussian(returns, level=5, cornish_fischer_z=False):
     z = scipy.stats.norm.ppf(level / 100)
     if cornish_fischer_z:
-        s = stats.skewness(returns)
-        k = stats.kurtosis(returns)
+        s = finstats.skewness(returns)
+        k = finstats.kurtosis(returns)
         z = (
             z
             + (z**2 - 1) * s / 6

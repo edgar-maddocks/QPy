@@ -1,10 +1,5 @@
 import yfinance as yf
-import pandas as pd
-import numpy as np
-import pandas_datareader as pdr
 import datetime as dt
-import Stats
-import EF
 
 
 def get_data(tickers, interval="1D", n_years=5):
@@ -41,7 +36,13 @@ def get_portfolio_data(tickers, interval="1D", n_years=5):
 def get_pairs_data(tickers: tuple, interval="1D", n_years=5):
     end_date = dt.datetime.now()
     start_date = end_date - dt.timedelta(days=(365 * n_years))
-    data = yf.download(tickers, start=start_date, end=end_date)
-    data = data[["Close", "Volume"]]
+    all_data = {}
+    for ticker in tickers:
+        data = yf.download(ticker, start=start_date, end=end_date)
+        all_data[ticker] = data
 
-    return data
+    return all_data
+
+
+data = get_pairs_data(["AAPL", "GOOD"])
+print(data)
