@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling", "pandas", "termtables", "tqdm", "numpy", "yfinance", "scipy", "matplotlib", "statsmodels", "scikit-learn"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=69.0", "pandas", "termtables", "tqdm", "numpy", "yfinance", "scipy", "matplotlib", "statsmodels", "scikit-learn"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "QPy"
