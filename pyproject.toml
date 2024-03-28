@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling", "pandas", "termtables", "tqdm", "numpy", "yfinance", "scipy", "matplotlib", "statsmodels", "sklearn"]
+build-backend = "hatchling.build"
+
+[project]
+name = "QPy"
+version = "0.0.1"
+authors = [
+  { name="Edgar Maddocks", email="edgarmaddocks@outlook.com" },
+]
+description = "An all-in-one quantitative finance library that aims to integrate ML models and traditional quantitative techniques"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/edgar-maddocks/QPy"
+Issues = "https://github.com/edgar-maddocks/QPy/issues"
