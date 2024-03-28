@@ -1,5 +1,5 @@
-from data_getter import get_data
-from backtesting import Btester, Strategy
+from src.QPy.data_getter import get_data
+from src.QPy.backtesting import Btester, Strategy
 import pandas_ta as ta
 
 data = get_data("AAPL")
