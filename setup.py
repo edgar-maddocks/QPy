@@ -14,15 +14,15 @@ setup(
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
     install_requires=[
-        "pandas",
-        "termtables",
-        "tqdm",
-        "numpy",
-        "yfinance",
-        "scipy",
-        "matplotlib",
-        "statsmodels",
-        "scikit-learn",
+        "pandas>=2.1.0",
+        "termtables>=0.2.4",
+        "tqdm>=4.66.1",
+        "numpy>=1.25.2",
+        "yfinance>=0.2.28",
+        "scipy>=1.11.2",
+        "matplotlib>=3.7.2",
+        "statsmodels>=0.14.0",
+        "scikit-learn>=1.3.2",
     ],  # add any additional packages that
     # needs to be installed along with your package. Eg: 'caer'
     keywords=[
@@ -34,13 +34,5 @@ setup(
         "backtesting",
         "portfolio",
         "stats",
-    ],
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Education",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3",
-        "Operating System :: MacOS :: MacOS X",
-        "Operating System :: Microsoft :: Windows",
     ],
 )
