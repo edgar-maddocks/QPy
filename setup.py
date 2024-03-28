@@ -6,7 +6,6 @@ LONG_DESCRIPTION = "An all-in-one quantitative finance library which aims to imp
 
 # Setting up
 setup(
-    # the name must match the folder name 'verysimplemodule'
     name="QPy",
     version=VERSION,
     author="Edgar Maddocks",
