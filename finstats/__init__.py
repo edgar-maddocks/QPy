@@ -1,2 +1,2 @@
-from finstats import *
-from VaR import *
+from .finstats import *
+from .VaR import *

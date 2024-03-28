@@ -3,7 +3,6 @@ import datetime as dt
 
 
 def get_data(tickers, interval="1D", n_years=5):
-    all_data = {}
     end_date = dt.datetime.now()
     start_date = end_date - dt.timedelta(days=(365 * n_years))
     data = yf.download(tickers, start=start_date, end=end_date)
@@ -42,7 +41,3 @@ def get_pairs_data(tickers: tuple, interval="1D", n_years=5):
         all_data[ticker] = data
 
     return all_data
-
-
-data = get_pairs_data(["AAPL", "GOOD"])
-print(data)

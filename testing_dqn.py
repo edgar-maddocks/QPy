@@ -1,4 +1,4 @@
-from ..finrl import StocksEnv, Model, DQNAgent
+from .finrl import StocksEnv, Model, DQNAgent
 import yfinance as yf
 
 if __name__ == "__main__":

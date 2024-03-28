@@ -1,1 +1,1 @@
-from pairs import Stock, Pair
+from .pairs import Stock, Pair

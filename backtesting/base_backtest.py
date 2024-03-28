@@ -23,7 +23,7 @@ class Trade:
 class Strategy:
     def __init__(self, data: pd.DataFrame) -> None:
         self.curr_idx = None
-        self.data = data
+        self.all_data = data
 
         self.orders: List[Order] = []
         self.trades: List[Trade] = []
@@ -44,11 +44,14 @@ class Strategy:
     def total_position_size(self) -> int:
         return np.sum([t.size for t in self.trades])
 
+    @property
+    def data(self):
+        return self.all_data[: self.curr_idx]
+
 
 class Btester:
     def __init__(
         self,
-        data: pd.DataFrame,
         strategy: Strategy,
         init_balance: int = 1000,
         hedging: bool = False,
@@ -57,10 +60,10 @@ class Btester:
         self.init_balance = init_balance
         self.equity = init_balance
         self.balance = init_balance
-
-        self.data = data
+        self.peak_equity = init_balance
 
         self.strat = strategy
+        self.data = self.strat.data
 
         self.curr_idx = None
 
@@ -77,10 +80,12 @@ class Btester:
             self._fill_orders()
 
             self._calculate_equity()
+            self.peak_equity = max(self.equity, self.peak_equity)
 
         string = tt.to_string(
             [
-                ["Final Equity", self.equity],
+                ["Final Equity [$]", self.equity],
+                ["Peak Equity [$]", self.peak_equity],
                 ["Total Return [$]", round(self.equity - self.init_balance, 5)],
                 [
                     "Total Return [%]",
